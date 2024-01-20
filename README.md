@@ -1,1 +1,1 @@
-# Art-Therapy
+# ArtTherapy

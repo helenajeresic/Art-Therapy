@@ -1,5 +1,11 @@
 PImage img;
 PImage borderedImg;
+PImage decorImg;
+PImage olovka;
+PImage pozadina;
+PImage gumica;
+int olovkaSize = 50; // Veličina olovke
+float olovkaX, olovkaY; // Trenutni položaj olovke
 int fillColor = color(255,255,255);   // Defaultna boja za bojanje
 int numColors;
 int colorWidth;          // Širina svakog kvadrata boje
@@ -10,44 +16,12 @@ int startY;              // Početna y-koordinata trake s bojama
 int numberInRow;         // Broj boja u traci
 
 void setup() {
-  background(#67177c);
-  size(800, 650);
-  img = loadImage("opcija2.png");
+  size(800, 800);
+  Resetiraj();
   
-  // Stvori novu sliku za obrub
-  borderedImg = createImage(img.width + 10, img.height + 10, ARGB);
-  
-  // Kopiraj originalnu sliku u središte nove slike
-  borderedImg.copy(img, 0, 0, img.width, img.height, 5, 5, img.width, img.height);
-  
-  // Dodaj obrub na novu sliku
-  borderedImg.loadPixels();
-  for (int x = 0; x < borderedImg.width; x++) {
-    for (int y = 0; y < 5; y++) {
-      borderedImg.pixels[y * borderedImg.width + x] = color(#4cd728);
-      borderedImg.pixels[(borderedImg.height - y - 1) * borderedImg.width + x] = color(#4cd728);
-    }
-  }
-  for (int y = 0; y < borderedImg.height; y++) {
-    for (int x = 0; x < 5; x++) {
-      borderedImg.pixels[y * borderedImg.width + x] = color(#4cd728); 
-      borderedImg.pixels[y * borderedImg.width + (borderedImg.width - x - 1)] = color(#4cd728);
-    }
-  }
-  borderedImg.updatePixels();
-  
-  // Prikaz slike
-  image(borderedImg, 0, 0);
-  
-  // Iscrtavanje trake s bojama
-  numColors = 30;
-  colorWidth = 30; 
-  colorHeight = 30; 
-  padding = 5;
-  startX = 10; 
-  startY = img.height + 20; 
-  numberInRow = 15; 
-  
+}
+
+void postaviPaletu(){
   int rows = (int) Math.ceil((float) numColors / numberInRow);   
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < numberInRow; col++) {
@@ -61,6 +35,7 @@ void setup() {
     }
   }
 }
+
 
 int getColor(int index) {
   switch (index % numColors) {
@@ -129,9 +104,25 @@ int getColor(int index) {
   }
 }
 
+void azuriraj(){
+  image(pozadina, 0, 0);
+  image(borderedImg, 0, 0);
+  image(decorImg, 0, 150);
+  postaviPaletu();
+  crtajKrug(width-100, 150,130);
+  image(gumica, width-150, 100, 100, 100);
+}
 
 
 void draw() {
+  azuriraj();
+  // Ažuriraj položaj olovke na trenutni položaj miša
+  olovkaX = mouseX;
+  olovkaY = mouseY;
+
+  // Prikazi sliku olovke na trenutnom položaju miša
+  image(olovka, olovkaX - olovkaSize / 2, olovkaY - olovkaSize / 2, olovkaSize, olovkaSize);
+
   // Iscrtavanje kvadrata s trenutno odabranom bojom
   fill(fillColor);
   stroke(fillColor);
@@ -171,6 +162,12 @@ void mousePressed() {
       image(borderedImg, 0, 0);
     }
   }
+  
+  // Provjeri je li kliknuti piksel unutar područja gdje se nalazi gumica
+  if (mouseX >= width - 150 && mouseX <= width - 50 && mouseY >= 100 && mouseY <= 200) {
+    Resetiraj();
+   
+  }
 }
 
 // Flood Fill algoritam
@@ -195,4 +192,75 @@ void floodFill(int x, int y, int fillColor) {
       stack.add(new PVector(x, y + 1)); 
     }
   }
+}
+
+void Resetiraj(){
+  background(#67177c);
+  size(800, 800);
+  img = loadImage("opcija2.png");
+  pozadina = loadImage("zvij.jpg");
+  image(pozadina, 0, 0);
+  noCursor();
+  
+  //postavlja polozaj olovke 
+  olovka = loadImage("olovka.png");
+
+  // Stvori novu sliku za obrub
+  borderedImg = createImage(img.width + 10, img.height + 10, ARGB);
+  
+  // Kopiraj originalnu sliku u središte nove slike
+  borderedImg.copy(img, 0, 0, img.width, img.height, 5, 5, img.width, img.height);
+  
+  // Dodaj obrub na novu sliku
+  borderedImg.loadPixels();
+  for (int z = 0; z < borderedImg.width; z++) {
+    for (int k = 0; k < 5; k++) {
+      borderedImg.pixels[k * borderedImg.width + z] = color(#00008B);
+      borderedImg.pixels[(borderedImg.height - k - 1) * borderedImg.width + z] = color(#00008B);
+    }
+  }
+  for (int k = 0; k < borderedImg.height; k++) {
+    for (int z = 0; z < 5; z++) {
+      borderedImg.pixels[k * borderedImg.width + z] = color(#00008B); 
+      borderedImg.pixels[k * borderedImg.width + (borderedImg.width - z - 1)] = color(#00008B);
+    }
+  }
+  borderedImg.updatePixels();
+  
+  // Prikaz slike
+  image(borderedImg, 0, 0);
+  
+  // Iscrtavanje trake s bojama
+  numColors = 30;
+  colorWidth = 30; 
+  colorHeight = 30; 
+  padding = 5;
+  startX = 10; 
+  startY = img.height + 20; 
+  numberInRow = 15; 
+  
+  postaviPaletu();
+  
+  decorImg = loadImage("bojice.png");
+  decorImg.resize(0, 800);
+  decorImg = decorImg.get(110, 0, decorImg.width, decorImg.height);
+  // Prikaz slike bojice ispod trake s bojama
+  image(decorImg, 0, 150);
+  
+  crtajKrug(width-100, 150, 130);
+  gumica = loadImage("gumica.png");
+  image(gumica, width - 150, 100, 100, 100);
+}
+
+
+//crta krug oko opcije, samo da ima neku pozadinu i bolje se istice
+void crtajKrug(float x_,float y_,float d_){
+  stroke(#EDE9E8 ); // Postavljanje boje obruba na crnu
+  fill(#EDE9E8 ); // Postavljanje boje ispune na neku nijansu plave
+
+  float x = x_; // Središte kruga na polovici širine prozora
+  float y = y_; // Središte kruga na polovici visine prozora
+  float diameter = d_; // Promjer kruga
+
+  ellipse(x, y, diameter, diameter); // Crtanje kruga
 }

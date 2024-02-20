@@ -1,9 +1,14 @@
+import javax.swing.JOptionPane;
+
 PImage img;
 PImage borderedImg;
 PImage decorImg;
 PImage olovka;
 PImage pozadina;
 PImage gumica;
+PImage disketa;
+PImage printer;
+PGraphics pg;
 int olovkaSize = 50; // Veličina olovke
 float olovkaX, olovkaY; // Trenutni položaj olovke
 int fillColor = color(255,255,255);   // Defaultna boja za bojanje
@@ -14,6 +19,7 @@ int padding;             // Prostor između svakog kvadrata boje
 int startX;              // Početna x-koordinata trake s bojama
 int startY;              // Početna y-koordinata trake s bojama
 int numberInRow;         // Broj boja u traci
+
 
 void setup() {
   size(800, 800);
@@ -111,6 +117,10 @@ void azuriraj(){
   postaviPaletu();
   crtajKrug(width-100, 150,130);
   image(gumica, width-150, 100, 100, 100);
+  crtajKrug(width-100, 400, 130);
+  image(disketa, width-150, 350, 100, 100);
+  crtajKrug(width-100, 650, 130);
+  image(printer, width-150, 600, 100, 100);
 }
 
 
@@ -168,6 +178,45 @@ void mousePressed() {
     Resetiraj();
    
   }
+  
+  //Provjeri je li klikunti piksel unuar područja gdje se nalazi disketa
+  if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 350 && mouseY <= 450)
+      {
+        String  korisnickiUnos = JOptionPane.showInputDialog(null,"Unesite naziv datoteke za spremanje:", "Spremi", JOptionPane.PLAIN_MESSAGE);
+        // Postavlja željene dimenzije PGraphics objekta
+        int pgWidth = 615;
+        int pgHeight = 544;
+       
+        // Kreira PGraphics objekt sa željenim dimenzijama
+        pg = createGraphics(pgWidth, pgHeight);
+       
+        // Postavlja PGraphics tako da ne pokriva ceo ekran
+        int offsetX = 5;
+        int offsetY = 5;
+       
+        // Postavlja PGraphics kao trenutni kontekst sa određenim offsetom
+        beginRecord(pg);
+        pg.image(get(), -offsetX, -offsetY);
+        endRecord();
+       
+        if(korisnickiUnos == null){
+         
+        }
+        else{
+        // Čuva PGraphics kao sliku
+        pg.save(korisnickiUnos +".png");
+        // Prikazuje poruku o uspešnom unosu
+        JOptionPane.showMessageDialog(null, "Uspješno spremljeno!");
+        }
+ 
+      }
+   
+   //Provjeri je li kliknuti piksel unuat područja gdje se nalazi printer
+   if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 600 && mouseY <= 700)
+     {
+       
+     }
+  
 }
 
 // Flood Fill algoritam
@@ -250,6 +299,14 @@ void Resetiraj(){
   crtajKrug(width-100, 150, 130);
   gumica = loadImage("gumica.png");
   image(gumica, width - 150, 100, 100, 100);
+  
+  crtajKrug(width-100, 400, 130);
+  disketa = loadImage("disk.png");
+  image(disketa, width-150, 350, 100, 100);
+  
+  crtajKrug(width-100, 650, 130);
+  printer = loadImage("printer1.png");
+  image(printer, width-150, 600, 100, 100);
 }
 
 

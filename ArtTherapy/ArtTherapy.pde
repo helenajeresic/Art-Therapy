@@ -1,5 +1,8 @@
 import javax.swing.JOptionPane;
+import processing.pdf.*;
 
+PImage cropImg;
+PImage ikona;
 PImage img;
 PImage borderedImg;
 PImage decorImg;
@@ -23,6 +26,10 @@ int numberInRow;         // Broj boja u traci
 
 void setup() {
   size(800, 800);
+  ikona = loadImage("ikonica1.png");
+
+  surface.setIcon(ikona);
+  
   Resetiraj();
   
 }
@@ -131,7 +138,7 @@ void draw() {
   olovkaY = mouseY;
 
   // Prikazi sliku olovke na trenutnom položaju miša
-  image(olovka, olovkaX - olovkaSize / 2, olovkaY - olovkaSize / 2, olovkaSize, olovkaSize);
+  image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
 
   // Iscrtavanje kvadrata s trenutno odabranom bojom
   fill(fillColor);
@@ -186,27 +193,27 @@ void mousePressed() {
         // Postavlja željene dimenzije PGraphics objekta
         int pgWidth = 615;
         int pgHeight = 544;
-       
+        
         // Kreira PGraphics objekt sa željenim dimenzijama
         pg = createGraphics(pgWidth, pgHeight);
-       
+        
         // Postavlja PGraphics tako da ne pokriva ceo ekran
         int offsetX = 5;
         int offsetY = 5;
-       
+        
         // Postavlja PGraphics kao trenutni kontekst sa određenim offsetom
         beginRecord(pg);
         pg.image(get(), -offsetX, -offsetY);
         endRecord();
-       
+        
         if(korisnickiUnos == null){
-         
+          
         }
         else{
         // Čuva PGraphics kao sliku
         pg.save(korisnickiUnos +".png");
         // Prikazuje poruku o uspešnom unosu
-        JOptionPane.showMessageDialog(null, "Uspješno spremljeno!");
+        JOptionPane.showMessageDialog(null, "Uspješno spremljeno!", "Uspjeh",JOptionPane.PLAIN_MESSAGE );
         }
  
       }
@@ -214,7 +221,21 @@ void mousePressed() {
    //Provjeri je li kliknuti piksel unuat područja gdje se nalazi printer
    if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 600 && mouseY <= 700)
      {
-       
+       String  korisnickiUnos = JOptionPane.showInputDialog(null,"Unesite naziv datoteke za spremanje:", "Spremi", JOptionPane.PLAIN_MESSAGE);
+       if(korisnickiUnos == null){
+          
+        }
+        else{
+        // Čuva PGraphics kao sliku
+        beginRecord(PDF, korisnickiUnos +".pdf");
+        cropImg = createImage(borderedImg.width - 5, borderedImg.height - 5, ARGB);
+        cropImg.copy(borderedImg, 5, 5, borderedImg.width, borderedImg.height, 0, 0, borderedImg.width, borderedImg.height);
+        image(cropImg, 0, 0);
+
+        endRecord();
+        JOptionPane.showMessageDialog(null, "Uspješno spremljeno!", "Uspjeh",JOptionPane.PLAIN_MESSAGE );
+        azuriraj();
+        } 
      }
   
 }

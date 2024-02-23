@@ -11,6 +11,7 @@ PImage pozadina;
 PImage gumica;
 PImage disketa;
 PImage printer;
+PImage ploca;
 PGraphics pg;
 int olovkaSize = 50; // Veličina olovke
 float olovkaX, olovkaY; // Trenutni položaj olovke
@@ -22,6 +23,7 @@ int padding;             // Prostor između svakog kvadrata boje
 int startX;              // Početna x-koordinata trake s bojama
 int startY;              // Početna y-koordinata trake s bojama
 int numberInRow;         // Broj boja u traci
+String selectedImage;    // Odabrana slika u opcijama
 
 
 void setup() {
@@ -31,7 +33,6 @@ void setup() {
   surface.setIcon(ikona);
   
   Resetiraj();
-  
 }
 
 void postaviPaletu(){
@@ -122,12 +123,22 @@ void azuriraj(){
   image(borderedImg, 0, 0);
   image(decorImg, 0, 150);
   postaviPaletu();
-  crtajKrug(width-100, 150,130);
-  image(gumica, width-150, 100, 100, 100);
-  crtajKrug(width-100, 400, 130);
-  image(disketa, width-150, 350, 100, 100);
+  
+  crtajKrug(width-100, 100, 130);
+  gumica = loadImage("gumica.png");
+  image(gumica, width - 150, 50, 100, 100);
+  
+  crtajKrug(width-100, 300, 130);
+  disketa = loadImage("disk.png");
+  image(disketa, width-150, 250, 100, 100);
+  
   crtajKrug(width-100, 650, 130);
+  printer = loadImage("printer1.png");
   image(printer, width-150, 600, 100, 100);
+  
+  crtajKrug(width-100, 450, 130);
+  ploca = loadImage("ploca.png");
+  image(ploca, width-150, 400, 100, 100);
 }
 
 
@@ -181,13 +192,12 @@ void mousePressed() {
   }
   
   // Provjeri je li kliknuti piksel unutar područja gdje se nalazi gumica
-  if (mouseX >= width - 150 && mouseX <= width - 50 && mouseY >= 100 && mouseY <= 200) {
+  if (mouseX >= width - 150 && mouseX <= width - 50 && mouseY >= 50 && mouseY <= 150) {
     Resetiraj();
-   
   }
   
   //Provjeri je li klikunti piksel unuar područja gdje se nalazi disketa
-  if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 350 && mouseY <= 450)
+  if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 250 && mouseY <= 350)
       {
         String  korisnickiUnos = JOptionPane.showInputDialog(null,"Unesite naziv datoteke za spremanje:", "Spremi", JOptionPane.PLAIN_MESSAGE);
         // Postavlja željene dimenzije PGraphics objekta
@@ -217,6 +227,11 @@ void mousePressed() {
         }
  
       }
+      
+   // Provjeri je li kliknuti piksel unutar područja na kojem se nalazi ploča
+   if(mouseX >= width - 150 && mouseY <= width-50 && mouseY >= 450 && mouseY <= 500) {
+     ZaslonOdabirSlike();
+   }
    
    //Provjeri je li kliknuti piksel unuat područja gdje se nalazi printer
    if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 600 && mouseY <= 700)
@@ -267,14 +282,20 @@ void floodFill(int x, int y, int fillColor) {
 void Resetiraj(){
   background(#67177c);
   size(800, 800);
-  img = loadImage("opcija2.png");
+  
+  if(selectedImage != null) {
+    img = loadImage(selectedImage);
+  } else {
+    img = loadImage("opcija6.png");
+  }
+ 
   pozadina = loadImage("zvij.jpg");
   image(pozadina, 0, 0);
   noCursor();
   
   //postavlja polozaj olovke 
   olovka = loadImage("olovka.png");
-
+  
   // Stvori novu sliku za obrub
   borderedImg = createImage(img.width + 10, img.height + 10, ARGB);
   
@@ -317,19 +338,23 @@ void Resetiraj(){
   // Prikaz slike bojice ispod trake s bojama
   image(decorImg, 0, 150);
   
-  crtajKrug(width-100, 150, 130);
+  crtajKrug(width-100, 100, 130);
   gumica = loadImage("gumica.png");
-  image(gumica, width - 150, 100, 100, 100);
+  image(gumica, width - 150, 50, 100, 100);
   
-  crtajKrug(width-100, 400, 130);
+  crtajKrug(width-100, 300, 130);
   disketa = loadImage("disk.png");
-  image(disketa, width-150, 350, 100, 100);
+  image(disketa, width-150, 250, 100, 100);
   
   crtajKrug(width-100, 650, 130);
   printer = loadImage("printer1.png");
   image(printer, width-150, 600, 100, 100);
+  
+  crtajKrug(width-100, 450, 130);
+  ploca = loadImage("ploca.png");
+  image(ploca, width-150, 400, 100, 100);
+  
 }
-
 
 //crta krug oko opcije, samo da ima neku pozadinu i bolje se istice
 void crtajKrug(float x_,float y_,float d_){

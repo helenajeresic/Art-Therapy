@@ -11,9 +11,9 @@ String[] images = {"opcija1.png", "opcija2.png", "opcija3.png", "opcija4.png", "
                   "opcija7.png", "opcija8.png", "opcija9.png", "opcija10.png", "opcija11.png", "opcija12.png",
                 "opcija13.png", "opcija14.png", "opcija15.png", "opcija16.png"};
 String selectedImagePath;
+JDialog dialog = new JDialog();
 
 void ZaslonOdabirSlike() {
-  JDialog dialog = new JDialog();
   dialog.setTitle("Select Image");
   dialog.setSize(800, 1000);
   dialog.setLocationRelativeTo(null);  
@@ -65,6 +65,7 @@ void ZaslonOdabirSlike() {
   dialog.setVisible(true);
 }
 
+/*
 void openFile() {
   JFileChooser fileChooser = new JFileChooser();
   String currentDir = System.getProperty("user.dir");
@@ -79,5 +80,22 @@ void openFile() {
     println("selected file", selectedFile);
     selectedImage = selectedFile.getAbsolutePath();
     println("Selected Image: " + selectedImage);
+  }
+}
+*/
+
+void openFile() {
+  selectInput("Select an image file", "fileSelected");
+}
+
+void fileSelected(File selection) {
+  if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  } else {
+    println("User selected " + selection.getAbsolutePath());
+    selectedImage = selection.getName();
+    println(selectedImage);
+    Resetiraj();
+    dialog.dispose();
   }
 }

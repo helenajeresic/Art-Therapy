@@ -24,6 +24,7 @@ int startX;              // Početna x-koordinata trake s bojama
 int startY;              // Početna y-koordinata trake s bojama
 int numberInRow;         // Broj boja u traci
 String selectedImage;    // Odabrana slika u opcijama
+boolean initialized = false;
 
 
 void setup() {
@@ -33,6 +34,7 @@ void setup() {
   surface.setIcon(ikona);
   
   Resetiraj();
+  initialized = true;
 }
 
 void postaviPaletu(){
@@ -119,41 +121,38 @@ int getColor(int index) {
 }
 
 void azuriraj(){
-  image(pozadina, 0, 0);
+  //image(pozadina, 0, 0);
   image(borderedImg, 0, 0);
   image(decorImg, 0, 150);
+  
   postaviPaletu();
   
-  crtajKrug(width-100, 100, 130);
-  gumica = loadImage("gumica.png");
-  image(gumica, width - 150, 50, 100, 100);
-  
-  crtajKrug(width-100, 300, 130);
-  disketa = loadImage("disk.png");
-  image(disketa, width-150, 250, 100, 100);
-  
-  crtajKrug(width-100, 650, 130);
-  printer = loadImage("printer1.png");
-  image(printer, width-150, 600, 100, 100);
-  
-  crtajKrug(width-100, 450, 130);
-  ploca = loadImage("ploca.png");
-  image(ploca, width-150, 400, 100, 100);
+  if(initialized == false){
+    drawStaticElements();
+    initialized = true;
+  }
 }
 
 
 void draw() {
   azuriraj();
   // Ažuriraj položaj olovke na trenutni položaj miša
+  
   olovkaX = mouseX;
   olovkaY = mouseY;
 
-  // Prikazi sliku olovke na trenutnom položaju miša
-  image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
+  // Prikazi sliku olovke na trenutnom položaju miša, ako je miš unutar slike za bojanje
+  if(olovkaX <= 600 && olovkaY <= 544) {
+    image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
+    noCursor();
+  } else {
+    cursor();
+  }
 
   // Iscrtavanje kvadrata s trenutno odabranom bojom
   fill(fillColor);
-  stroke(fillColor);
+  noStroke();
+  
   rect(borderedImg.width - colorWidth * 2.5 , startY, colorWidth * 2, colorHeight * 2 + padding);
 }
 
@@ -288,10 +287,6 @@ void Resetiraj(){
   } else {
     img = loadImage("opcija6.png");
   }
- 
-  pozadina = loadImage("zvij.jpg");
-  image(pozadina, 0, 0);
-  noCursor();
   
   //postavlja polozaj olovke 
   olovka = loadImage("olovka.png");
@@ -338,6 +333,15 @@ void Resetiraj(){
   // Prikaz slike bojice ispod trake s bojama
   image(decorImg, 0, 150);
   
+  drawStaticElements();
+}
+
+// Crta opcije na desnoj strani
+void drawStaticElements() {
+  
+  pozadina = loadImage("zvij.jpg");
+  image(pozadina, 0, 0);
+  //noCursor();
   crtajKrug(width-100, 100, 130);
   gumica = loadImage("gumica.png");
   image(gumica, width - 150, 50, 100, 100);
@@ -353,7 +357,6 @@ void Resetiraj(){
   crtajKrug(width-100, 450, 130);
   ploca = loadImage("ploca.png");
   image(ploca, width-150, 400, 100, 100);
-  
 }
 
 //crta krug oko opcije, samo da ima neku pozadinu i bolje se istice

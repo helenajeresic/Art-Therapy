@@ -16,12 +16,13 @@ JDialog dialog = new JDialog();
 
 // Otvaranje i rad s zaslonom za odabir slike za bojanje. 
 void ZaslonOdabirSlike() {
-  noCursor();
+  enabled = false;
+  println(enabled);
   // Otvaranje dijaloga.
   dialog.setTitle("Select Image");
   dialog.setSize(800, 800);
   dialog.setLocationRelativeTo(null);  
-  dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
   JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
@@ -62,12 +63,27 @@ void ZaslonOdabirSlike() {
   confirmButton.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
       selectedImage = selectedImagePath;
+      enabled = true;
       println(selectedImage);
+      println(enabled);
       dialog.dispose();
       Resetiraj();
     }
   });
   panel.add(confirmButton);
+  
+  // Gumb kojim se izlazi iz opcija, ne mijenja odabranu sliku.
+  JButton closeButton = new JButton("Close");
+  closeButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Close button clicked");
+        enabled = true;
+        println(enabled);
+        dialog.dispose();
+    }
+  });
+  panel.add(closeButton);
   dialog.setVisible(true);
 }
 
@@ -84,7 +100,8 @@ void fileSelected(File selection) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
-    
+    enabled = true;
+    println(enabled);
     // Postavlja ime odabrane datoteke (samo ime, bez putanje) u varijablu selectedImage.
     selectedImage = selection.getName();
     println(selectedImage);

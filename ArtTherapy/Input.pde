@@ -69,12 +69,12 @@ void mousePressed() {
  
       }
       
-   // Provjeri je li kliknuti piksel unutar područja na kojem se nalazi ploča
+   // Provjeri je li kliknuti piksel unutar područja na kojem se nalazi ploča.
    if(mouseX >= width - 150 && mouseY <= width-50 && mouseY >= 450 && mouseY <= 500) {
      ZaslonOdabirSlike();
    }
    
-   //Provjeri je li kliknuti piksel unuat područja gdje se nalazi printer
+   // Provjeri je li kliknuti piksel unuat područja gdje se nalazi printer.
    if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 600 && mouseY <= 700)
      {
        String  korisnickiUnos = JOptionPane.showInputDialog(null,"Unesite naziv datoteke za spremanje:", "Spremi", JOptionPane.PLAIN_MESSAGE);

@@ -1,4 +1,24 @@
+void ZaslonBojanka() {
+  azuriraj();
+  // Ažuriraj položaj olovke na trenutni položaj miša
+  
+  olovkaX = mouseX;
+  olovkaY = mouseY;
 
+  // Prikazi sliku olovke na trenutnom položaju miša, ako je miš unutar slike za bojanje
+  if(olovkaX <= 600 && olovkaY <= 544) {
+    image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
+    noCursor();
+  } else {
+    cursor();
+  }
+
+  // Iscrtavanje kvadrata s trenutno odabranom bojom
+  fill(fillColor);
+  noStroke();
+  
+  rect(borderedImg.width - colorWidth * 2.5 , startY, colorWidth * 2, colorHeight * 2 + padding);
+}
 
 int getColor(int index) {
   switch (index % numColors) {
@@ -119,15 +139,6 @@ void Resetiraj(){
   
   // Prikaz slike
   image(borderedImg, 0, 0);
-  
-  // Iscrtavanje trake s bojama
-  numColors = 30;
-  colorWidth = 30; 
-  colorHeight = 30; 
-  padding = 5;
-  startX = 10; 
-  startY = img.height + 20; 
-  numberInRow = 15; 
   
   postaviPaletu();
   

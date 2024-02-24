@@ -41,6 +41,7 @@ void setup() {
 
 
 void draw() {
+ 
   azuriraj();
   // Ažuriraj položaj olovke na trenutni položaj miša
   

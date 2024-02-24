@@ -1,5 +1,15 @@
 // Postavlja paletu boja.
 void postaviPaletu(){
+  
+  // Iscrtavanje trake s bojama
+  numColors = 30;
+  colorWidth = 30; 
+  colorHeight = 30; 
+  padding = 5;
+  startX = 10; 
+  startY = img.height + 20; 
+  numberInRow = 15; 
+  
   int rows = (int) Math.ceil((float) numColors / numberInRow);   
   for (int row = 0; row < rows; row++) {
     for (int col = 0; col < numberInRow; col++) {

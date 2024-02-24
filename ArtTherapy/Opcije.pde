@@ -7,30 +7,34 @@ import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 
+// Lista naziva slika koje se nude za bojanje u opcijama.
 String[] images = {"opcija1.png", "opcija2.png", "opcija3.png", "opcija4.png", "opcija5.png", "opcija6.png", 
                   "opcija7.png", "opcija8.png", "opcija9.png", "opcija10.png", "opcija11.png", "opcija12.png",
-                "opcija13.png", "opcija14.png", "opcija15.png", "opcija16.png"};
+                  "opcija13.png", "opcija14.png", "opcija15.png", "opcija16.png"};
 String selectedImagePath;
 JDialog dialog = new JDialog();
 
+// Otvaranje i rad s zaslonom za odabir slike za bojanje. 
 void ZaslonOdabirSlike() {
+  // Otvaranje dijaloga.
   dialog.setTitle("Select Image");
-  dialog.setSize(800, 1000);
+  dialog.setSize(800, 800);
   dialog.setLocationRelativeTo(null);  
   dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
   JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
   for (String imagePath : images) {
-    // Load the image
+    // Učitavanje slike.
     ImageIcon originalIcon = new ImageIcon(loadImage(imagePath).getImage());
 
-    // Scale the image to your desired size
+    // Skaliranje učitanih slika.
     Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 
-    // Create a new ImageIcon with the scaled image
+    // Kreiranje ikona s trenutnom slikom.
     ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
+    // Gumbovi kojima pratimo odabranu sliku.
     JButton imageButton = new JButton(scaledIcon);
     imageButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
@@ -41,6 +45,7 @@ void ZaslonOdabirSlike() {
   }
   dialog.add(panel);
   
+  // Gumb koji otvara dijalog za otvaranje slike.
   JButton openFileButton = new JButton("Open File");
   openFileButton.addActionListener(new ActionListener() {
     @Override
@@ -51,6 +56,7 @@ void ZaslonOdabirSlike() {
   });
   panel.add(openFileButton);
 
+  // Gumb kojim potvrđujemo odabranu opciju.
   JButton confirmButton = new JButton("Confirm");
   confirmButton.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
@@ -65,37 +71,28 @@ void ZaslonOdabirSlike() {
   dialog.setVisible(true);
 }
 
-/*
-void openFile() {
-  JFileChooser fileChooser = new JFileChooser();
-  String currentDir = System.getProperty("user.dir");
-  fileChooser.setCurrentDirectory(new File(currentDir));
-  FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "png", "jpg", "jpeg", "gif");
-  fileChooser.setFileFilter(filter);
-
-  int returnValue = fileChooser.showOpenDialog(null);
-  println("return value",returnValue);
-  if (returnValue == JFileChooser.APPROVE_OPTION) {
-    File selectedFile = fileChooser.getSelectedFile();
-    println("selected file", selectedFile);
-    selectedImage = selectedFile.getAbsolutePath();
-    println("Selected Image: " + selectedImage);
-  }
-}
-*/
-
+// Poziva selectInput funckiju koja otvara dijalog za odabir datoteke,
+// nakon toga se poziva funckija "fileSelected".
 void openFile() {
   selectInput("Select an image file", "fileSelected");
 }
 
+// Provjera odabrane datoteke i spremanje  globalnu varijablu.
 void fileSelected(File selection) {
+  // Provjerava je li korisnik odabrao datoteku ili zatvorio dijalog.
   if (selection == null) {
     println("Window was closed or the user hit cancel.");
   } else {
     println("User selected " + selection.getAbsolutePath());
+    
+    // Postavlja ime odabrane datoteke (samo ime, bez putanje) u varijablu selectedImage.
     selectedImage = selection.getName();
     println(selectedImage);
+    
+    // Poziva funkciju Resetiraj kako bi se prikazala nova slika.
     Resetiraj();
+    
+    // Zatvara dijalog za odabir datoteke.
     dialog.dispose();
   }
 }

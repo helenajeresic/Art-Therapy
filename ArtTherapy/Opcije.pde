@@ -64,7 +64,6 @@ void ZaslonOdabirSlike() {
       selectedImage = selectedImagePath;
       println(selectedImage);
       dialog.dispose();
-      zaslon = 1;
       Resetiraj();
     }
   });
@@ -90,7 +89,6 @@ void fileSelected(File selection) {
     selectedImage = selection.getName();
     println(selectedImage);
     
-    zaslon = 1;
     // Poziva funkciju Resetiraj kako bi se prikazala nova slika.
     Resetiraj();
     

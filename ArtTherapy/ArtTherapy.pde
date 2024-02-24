@@ -26,9 +26,6 @@ int numberInRow;         // Broj boja u traci
 String selectedImage;    // Odabrana slika u opcijama
 boolean initialized = false;
 
-int zaslon = 1;
-
-
 void setup() {
   size(800, 800);
   ikona = loadImage("ikonica1.png");
@@ -36,19 +33,19 @@ void setup() {
   surface.setIcon(ikona);
   
   Resetiraj();
-  initialized = true;
 }
 
 
 void draw() {
- 
+  // Ažuriranje slike koju bojamo.
   azuriraj();
-  // Ažuriraj položaj olovke na trenutni položaj miša
   
+  // Ažuriraj položaj olovke na trenutni položaj miša.
   olovkaX = mouseX;
   olovkaY = mouseY;
 
-  // Prikazi sliku olovke na trenutnom položaju miša, ako je miš unutar slike za bojanje
+  // Ako je miš unutar slike za bojanje, prikaži sliku olovke na trenutnom položaju miša.
+  // Inače prikaži cursor miša.
   if(olovkaX <= 600 && olovkaY <= 544) {
     image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
     noCursor();
@@ -56,7 +53,7 @@ void draw() {
     cursor();
   }
 
-  // Iscrtavanje kvadrata s trenutno odabranom bojom
+  // Iscrtavanje kvadrata s trenutno odabranom bojom.
   fill(fillColor);
   noStroke();
   

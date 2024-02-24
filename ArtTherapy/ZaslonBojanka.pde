@@ -24,7 +24,7 @@ void postaviPaletu(){
   }
 }
 
-//Crta krug oko opcije, samo da ima neku pozadinu i bolje se istice.
+// Crta krug oko opcije, samo da ima neku pozadinu i bolje se istice.
 void crtajKrug(float x_,float y_,float d_){
   stroke(#EDE9E8 ); // Postavljanje boje obruba na crnu
   fill(#EDE9E8 ); // Postavljanje boje ispune na neku nijansu plave
@@ -36,9 +36,9 @@ void crtajKrug(float x_,float y_,float d_){
   ellipse(x, y, diameter, diameter); // Crtanje kruga
 }
 
-// Crta opcije desno, brisanje, save, print i otvaranje opcija.
+// Crta opcija desno - brisanje obojanog, save (kao slika), save (kao pdf) i otvaranje opcija.
 void drawStaticElements() {
-  
+ 
   // Crtanje opcija.
   pozadina = loadImage("zvij.jpg");
   image(pozadina, 0, 0);
@@ -49,19 +49,25 @@ void drawStaticElements() {
   image(gumica, width - 150, 50, 100, 100);
   
   // Opcija spremanja slike.
-  crtajKrug(width-100, 300, 130);
+  crtajKrug(width-100, 280, 130);
   disketa = loadImage("disk.png");
-  image(disketa, width-150, 250, 100, 100);
+  image(disketa, width-150, 230, 100, 100);
   
   // Otvaranje zaslona za biranje slike.
-  crtajKrug(width-100, 450, 130);
+  crtajKrug(width-100, 470, 130);
   ploca = loadImage("ploca.png");
-  image(ploca, width-150, 400, 100, 100);
+  image(ploca, width-150, 425, 100, 100);
   
   // Printanje slike.
   crtajKrug(width-100, 650, 130);
   printer = loadImage("printer1.png");
   image(printer, width-150, 600, 100, 100);
   
-
+  decorImg = loadImage("bojice.png");
+  decorImg.resize(0, 800);
+  decorImg = decorImg.get(110, 0, decorImg.width, decorImg.height);
+  // Prikaz slike bojice ispod trake s bojama
+  image(decorImg, 0, 150);
+  
+  initialized = true;
 }

@@ -1,25 +1,4 @@
-void ZaslonBojanka() {
-  azuriraj();
-  // Ažuriraj položaj olovke na trenutni položaj miša
-  
-  olovkaX = mouseX;
-  olovkaY = mouseY;
-
-  // Prikazi sliku olovke na trenutnom položaju miša, ako je miš unutar slike za bojanje
-  if(olovkaX <= 600 && olovkaY <= 544) {
-    image(olovka, olovkaX - olovkaSize/2 +10 , olovkaY -olovkaSize/2-15 , olovkaSize, olovkaSize);
-    noCursor();
-  } else {
-    cursor();
-  }
-
-  // Iscrtavanje kvadrata s trenutno odabranom bojom
-  fill(fillColor);
-  noStroke();
-  
-  rect(borderedImg.width - colorWidth * 2.5 , startY, colorWidth * 2, colorHeight * 2 + padding);
-}
-
+// Dohvati odabranu boju na paleti.
 int getColor(int index) {
   switch (index % numColors) {
     case 0:
@@ -87,41 +66,37 @@ int getColor(int index) {
   }
 }
 
+// Ažuriranje obojane slike.
 void azuriraj(){
-  //image(pozadina, 0, 0);
   image(borderedImg, 0, 0);
   image(decorImg, 0, 150);
   
-  postaviPaletu();
-  
   if(initialized == false){
     drawStaticElements();
-    initialized = true;
+    postaviPaletu();
   }
 }
 
 void Resetiraj(){
-  background(#67177c);
   size(800, 800);
   
-  //crtanje slike i statičkih elemenata
+  // Crtanje odabrane slike ili neke po defaultu.
   if(selectedImage != null) {
     img = loadImage(selectedImage);
   } else {
     img = loadImage("opcija6.png");
   }
-  drawStaticElements();
   
-  //postavlja polozaj olovke 
+  // Postavljanje slike olovke.
   olovka = loadImage("olovka.png");
   
-  // Stvori novu sliku za obrub
+  // Stvori novu sliku za obrub.
   borderedImg = createImage(img.width + 10, img.height + 10, ARGB);
   
-  // Kopiraj originalnu sliku u središte nove slike
+  // Kopiraj originalnu sliku u središte nove slike.
   borderedImg.copy(img, 0, 0, img.width, img.height, 5, 5, img.width, img.height);
   
-  // Dodaj obrub na novu sliku
+  // Dodaj obrub na novu sliku.
   borderedImg.loadPixels();
   for (int z = 0; z < borderedImg.width; z++) {
     for (int k = 0; k < 5; k++) {
@@ -137,19 +112,17 @@ void Resetiraj(){
   }
   borderedImg.updatePixels();
   
-  // Prikaz slike
+  // Prikaz slike.
   image(borderedImg, 0, 0);
   
-  postaviPaletu();
-  
-  decorImg = loadImage("bojice.png");
-  decorImg.resize(0, 800);
-  decorImg = decorImg.get(110, 0, decorImg.width, decorImg.height);
-  // Prikaz slike bojice ispod trake s bojama
-  image(decorImg, 0, 150);
+  // Crtanje gumbova desno i palete, ako već nisu nacrtani.
+  if(initialized == false){
+    drawStaticElements();
+    postaviPaletu();
+  }
 }
 
-// Flood Fill algoritam
+// Flood Fill algoritam.
 void floodFill(int x, int y, int fillColor) {
   int targetColor = borderedImg.get(x, y);
   if (fillColor == targetColor) return;

@@ -38,7 +38,7 @@ void mousePressed() {
   }
   
   //Provjeri je li klikunti piksel unuar područja gdje se nalazi disketa
-  if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 250 && mouseY <= 350)
+  if (mouseX >= width-150 && mouseX <= width -50 && mouseY >= 230 && mouseY <= 330)
       {
         String  korisnickiUnos = JOptionPane.showInputDialog(null,"Unesite naziv datoteke za spremanje:", "Spremi", JOptionPane.PLAIN_MESSAGE);
         // Postavlja željene dimenzije PGraphics objekta
@@ -70,7 +70,7 @@ void mousePressed() {
       }
       
    // Provjeri je li kliknuti piksel unutar područja na kojem se nalazi ploča.
-   if(mouseX >= width - 150 && mouseY <= width-50 && mouseY >= 450 && mouseY <= 500) {
+   if(mouseX >= width - 150 && mouseY <= width-50 && mouseY >= 425 && mouseY <= 525) {
      ZaslonOdabirSlike();
    }
    

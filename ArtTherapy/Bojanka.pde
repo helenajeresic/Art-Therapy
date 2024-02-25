@@ -84,7 +84,7 @@ void Resetiraj(){
   if(selectedImage != null) {
     img = loadImage(selectedImage);
   } else {
-    img = loadImage("opcija6.png");
+    img = loadImage("opcija10.png");
   }
   
   // Postavljanje slike olovke.

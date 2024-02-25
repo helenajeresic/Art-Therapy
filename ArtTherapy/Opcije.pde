@@ -10,7 +10,7 @@ import java.io.File;
 // Lista naziva slika koje se nude za bojanje u opcijama.
 String[] images = {"opcija1.png", "opcija2.png", "opcija3.png", "opcija4.png", "opcija5.png", "opcija6.png", 
                   "opcija7.png", "opcija8.png", "opcija9.png", "opcija10.png", "opcija11.png", "opcija12.png",
-                  "opcija13.png", "opcija14.png", "opcija15.png", "opcija16.png"};
+                  "opcija13.png", "opcija15.png", "opcija18.png", "opcija20.png"};
 String selectedImagePath;
 JDialog dialog = new JDialog();
 

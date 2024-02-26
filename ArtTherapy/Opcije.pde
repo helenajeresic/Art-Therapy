@@ -17,7 +17,6 @@ JDialog dialog = new JDialog();
 // Otvaranje i rad s zaslonom za odabir slike za bojanje. 
 void ZaslonOdabirSlike() {
   enabled = false;
-  println(enabled);
   // Otvaranje dijaloga.
   dialog.setTitle("Select Image");
   dialog.setSize(800, 800);
@@ -65,7 +64,6 @@ void ZaslonOdabirSlike() {
       selectedImage = selectedImagePath;
       enabled = true;
       println(selectedImage);
-      println(enabled);
       dialog.dispose();
       Resetiraj();
     }
@@ -79,7 +77,6 @@ void ZaslonOdabirSlike() {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Close button clicked");
         enabled = true;
-        println(enabled);
         dialog.dispose();
     }
   });
@@ -101,7 +98,6 @@ void fileSelected(File selection) {
   } else {
     println("User selected " + selection.getAbsolutePath());
     enabled = true;
-    println(enabled);
     // Postavlja ime odabrane datoteke (samo ime, bez putanje) u varijablu selectedImage.
     selectedImage = selection.getName();
     println(selectedImage);

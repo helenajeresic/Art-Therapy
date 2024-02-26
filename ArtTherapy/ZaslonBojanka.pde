@@ -56,7 +56,7 @@ void drawStaticElements() {
   // Otvaranje zaslona za biranje slike.
   crtajKrug(width-100, 470, 130);
   ploca = loadImage("ploca.png");
-  image(ploca, width-150, 425, 100, 100);
+  image(ploca, width-135, 430, 80, 80);
   
   // Printanje slike.
   crtajKrug(width-100, 650, 130);
